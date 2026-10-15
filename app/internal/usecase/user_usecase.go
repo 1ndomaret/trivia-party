@@ -2,9 +2,11 @@ package usecase
 
 import (
 	"app/app/internal/domain"
+	"app/app/internal/helper"
 	"app/app/internal/model/dto"
 	"app/app/internal/model/entity"
 	"context"
+	"log"
 	"time"
 
 	"github.com/google/uuid"
@@ -55,5 +57,20 @@ func (u *userUsecase) Register(ctx context.Context, req *dto.UserRegisterRequest
 }
 
 func (u *userUsecase) Login(ctx context.Context, req *dto.UserLoginRequest) (string, error) {
-	return "", nil
+	user, err := u.userRepo.GetByEmail(ctx, req.Email)
+	if err != nil {
+		return "", err
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(req.Password)); err != nil {
+		return "", err
+	}
+
+	token, err := helper.GenerateToken(user)
+	if err != nil {
+		log.Println("Failed to generate token: ", err)
+		return "", err
+	}
+
+	return token, nil
 }

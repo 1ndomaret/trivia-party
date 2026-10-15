@@ -5,7 +5,6 @@ import (
 	"app/app/internal/helper"
 	"app/app/internal/model/dto"
 	"errors"
-	"net/http"
 
 	"github.com/labstack/echo/v5"
 )
@@ -40,5 +39,22 @@ func (h *UserHandler) Register(c *echo.Context) error {
 		return helper.InternalServerError(c, err.Error())
 	}
 
-	return helper.Success(c, http.StatusCreated, "Succesfully Registered", user)
+	return helper.Created(c, user)
+}
+
+func (h *UserHandler) Login(c *echo.Context) error {
+	var req dto.UserLoginRequest
+
+	if err := c.Bind(&req); err != nil {
+		return helper.BadRequest(c, err.Error())
+	}
+
+	token, err := h.userUsecase.Login(c.Request().Context(), &req)
+	if err != nil {
+		return helper.Unauthorized(c, "Invalid email or password")
+	}
+
+	return helper.Success(c, 200, "Login Success", dto.UserLoginResponse{
+		Token: token,
+	})
 }
