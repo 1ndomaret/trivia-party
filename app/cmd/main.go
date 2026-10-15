@@ -2,8 +2,8 @@ package main
 
 import (
 	"app/app/internal/config"
-	"app/app/internal/entity"
 	"app/app/internal/handler"
+	"app/app/internal/model/entity"
 	"app/app/internal/repository"
 	"app/app/internal/router"
 	"app/app/internal/usecase"
@@ -29,6 +29,7 @@ func main() {
 	userHandler := handler.NewUserHandler(userUsecase)
 
 	e := echo.New()
+	e.Validator = handler.NewCustomValidator()
 
 	router.Register(e,
 		userHandler,
