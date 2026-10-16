@@ -22,8 +22,8 @@ func Register(e *echo.Echo, userHandler *handler.UserHandler, roomHandler *handl
 	private.Use(echojwt.WithConfig(middleware.JwtConfig()), middleware.ParseJwtClaims)
 
 	private.POST("/room", roomHandler.CreateRoom)
-	private.PUT("/room/:id", roomHandler.UpdateRoom)
-	private.POST("/room/:id/start", roomHandler.StartRoom)
+	private.PUT("/room/:code", roomHandler.UpdateRoom)
+	private.POST("/room/:code/start", roomHandler.StartRoom)
 
-	private.POST("/room/:id/join", roomHandler.JoinRoom)
+	private.POST("/room/:code/join", roomHandler.JoinRoom)
 }

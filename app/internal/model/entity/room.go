@@ -19,8 +19,8 @@ type Room struct {
 	RoomCode         string     `gorm:"type:varchar(4);not null;index:idx_active_room_code,unique,where:status != 'FINISHED'" json:"room_code"`
 	UserID           uuid.UUID  `gorm:"type:uuid;uniqueIndex;not null" json:"user_id"`
 	QuestionCategory string     `gorm:"type:varchar(50);not null" json:"question_category"`
-	QuestionCount    int        `gorm:"default:10" json:"question_count"`
-	MaxPlayers       int        `gorm:"default:8" json:"max_players"`
+	QuestionCount    int        `gorm:"default:10;check:question_count <= 30" json:"question_count"`
+	MaxPlayers       int        `gorm:"default:8;check:max_players <= 20" json:"max_players"`
 	Status           RoomStatus `gorm:"type:varchar(20);default:'LOBBY'" json:"status"`
 	CreatedAt        time.Time  `json:"created_at"`
 	UpdatedAt        time.Time  `json:"updated_at"`

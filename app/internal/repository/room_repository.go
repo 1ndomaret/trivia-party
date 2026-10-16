@@ -21,3 +21,17 @@ func NewRoomRepository(db *gorm.DB) domain.RoomRepository {
 func (r *roomRepository) Create(ctx context.Context, room *entity.Room) error {
 	return r.db.WithContext(ctx).Create(room).Error
 }
+
+func (r *roomRepository) FindByRoomCode(ctx context.Context, roomCode string) (*entity.Room, error) {
+	var room entity.Room
+
+	if err := r.db.WithContext(ctx).Where("room_code = ? and status != ?", roomCode, entity.RoomFinished).First(&room).Error; err != nil {
+		return nil, err
+	}
+
+	return &room, nil
+}
+
+func (r *roomRepository) Update(ctx context.Context, room *entity.Room) error {
+	return r.db.WithContext(ctx).Save(room).Error
+}
