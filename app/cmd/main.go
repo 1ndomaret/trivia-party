@@ -29,11 +29,16 @@ func main() {
 	userUsecase := usecase.NewUserUsecase(userRepository)
 	userHandler := handler.NewUserHandler(userUsecase)
 
+	roomRepository := repository.NewRoomRepository(db)
+	roomUsecase := usecase.NewRoomUsecase(roomRepository)
+	roomHandler := handler.NewRoomHandler(roomUsecase)
+
 	e := echo.New()
 	e.Validator = helper.NewCustomValidator()
 
 	router.Register(e,
 		userHandler,
+		roomHandler,
 	)
 
 	if err := e.Start(":1323"); err != nil {

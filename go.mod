@@ -8,6 +8,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/websocket v1.5.3
 	github.com/joho/godotenv v1.5.1
+	github.com/labstack/echo-jwt/v5 v5.0.2
 	github.com/labstack/echo/v5 v5.4.0
 	golang.org/x/crypto v0.58.0
 	gorm.io/driver/postgres v1.6.3
@@ -30,4 +31,5 @@ require (
 	golang.org/x/sync v0.24.0 // indirect
 	golang.org/x/sys v0.49.0 // indirect
 	golang.org/x/text v0.43.0 // indirect
+	golang.org/x/time v0.15.0 // indirect
 )
