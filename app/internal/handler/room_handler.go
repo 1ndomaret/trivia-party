@@ -73,11 +73,25 @@ func (h *RoomHandler) UpdateRoom(c *echo.Context) error {
 }
 
 func (h *RoomHandler) StartRoom(c *echo.Context) error {
+	roomCode := c.Param("code")
+	if roomCode == "" {
+		return helper.BadRequest(c, "Missing room code")
+	}
 
-	return nil
+	return helper.Success(c, http.StatusOK, "Room Started", nil)
+}
+
+func (h *RoomHandler) CancelRoom(c *echo.Context) error {
+
+	return helper.Success(c, http.StatusOK, "Room Stopped", nil)
 }
 
 func (h *RoomHandler) JoinRoom(c *echo.Context) error {
 
-	return nil
+	return helper.Success(c, http.StatusOK, "Joined a room", nil)
+}
+
+func (h *RoomHandler) LeaveRoom(c *echo.Context) error {
+
+	return helper.Success(c, http.StatusOK, "Left a room", nil)
 }
